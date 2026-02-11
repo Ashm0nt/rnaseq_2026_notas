@@ -36,6 +36,7 @@ rtracklayer es un paquete de Bioconductor que proporciona funciones para importa
 
 ```{r}
 ## Lets build our first SummarizedExperiment object
+library("GenomeInfoDb")
 library("SummarizedExperiment")
 ## ?SummarizedExperiment
 
@@ -61,5 +62,25 @@ colData <- DataFrame(
     Treatment = rep(c("ChIP", "Input"), 3),
     row.names = LETTERS[1:6]
 )
+## Juntamos ahora toda la información en un solo objeto de R
+rse <- SummarizedExperiment(
+    assays = SimpleList(counts = counts),
+    rowRanges = rowRanges,
+    colData = colData
+)
+
+## Exploremos el objeto resultante
+rse
+```
+
+valores del eje y son los valores del gen 3 separados por el tratamiento
+
+```{r}
+y <- rse$Treatment ## Tambien funciona con colData(rse)$Treatment
+x <- as.numeric(assay(rse)[3, ])
+boxplot(x ~ y)
+
+summary(lm(x ~ y))
+
 
 ```
