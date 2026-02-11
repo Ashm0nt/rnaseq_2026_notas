@@ -1,0 +1,57 @@
+# Introducción a Bioconductor
+Bioconductor es un proyecto de software de código abierto que proporciona herramientas para el análisis de datos genómicos y biológicos. Fue fundado en 2001 por Robert Gentleman, uno de los creadores del lenguaje de programación R, y ha crecido hasta convertirse en una comunidad activa de desarrolladores y usuarios.
+
+A diferencia de CRAN, que es un repositorio general de paquetes para R, Bioconductor se centra específicamente en el análisis de datos biológicos. Biocunductor tiene una gran documentación y una comunidad activa que contribuye con paquetes y soporte. Además, Bioconductor se actualiza regularmente, con nuevas versiones cada seis meses, lo que garantiza que los usuarios tengan acceso a las últimas herramientas y mejoras. Además de los paquetes, Bioconductor también ofrece una variedad de recursos de documentación con un proceso de revisión y estandares de calidad, incluyendo:
+- Vignettes: Son documentos que proporcionan una introducción detallada a un paquete específico, con ejemplos de uso y explicaciones de las funciones principales. (Guías de usuario de como usar las diferentes funciones del paquete). 
+- Manuales: Son documentos más técnicos que describen en detalle las funciones y características de un paquete, pero sin ejemplos prácticos.
+- Doctrings: Son descripciones breves que se encuentran dentro del código de un paquete, proporcionando información sobre la función, sus argumentos y su salida.
+- Workflows: Son guías paso a paso que describen cómo realizar un análisis específico utilizando varios paquetes de Bioconductor. Estas guías son útiles para los usuarios que desean aprender a realizar análisis complejos utilizando múltiples herramientas.
+
+El core team de Bioconductor está compuesto por expertos en bioinformática y desarrollo de software, quienes supervisan la calidad y coherencia de los paquetes incluidos en el proyecto. Además, Bioconductor cuenta con una comunidad activa de desarrolladores y usuarios que contribuyen con nuevos paquetes, mejoras y soporte, así como la infrestructra de evaluación de paquetes. Está compuesto por tres grupos: Community, Technical and Scientific Advisory Team. Hay evalución constante de los paquetes diariamente, con un proceso de revisión riguroso para garantizar la calidad y la compatibilidad de los paquetes incluidos en el proyecto, si hay algún error o problema con un paquete, se notifica a los desarrolladores para que lo solucionen lo antes posible.
+
+
+
+**Bioconductor Conference 2026** 
+La conferencia anual de Bioconductor es un evento importante para la comunidad, donde se presentan nuevas herramientas, se discuten avances en el campo y se fomentan colaboraciones. Seattle, Washington.
+
+
+## Encntrando paquetes en Bioconductor
+
+Bioconductor saca versiones en Abril y en Octubre de cada año, con nuevas herramientas y mejoras. Para encontrar paquetes en Bioconductor, puedes utilizar la función `BiocManager::available()` para obtener una lista de todos los paquetes disponibles en el repositorio de Bioconductor. También puedes utilizar la función `BiocManager::install()` para instalar paquetes específicos directamente desde Bioconductor. También se puede checar la pagina web : https://bioconductor.org/packages/ .
+
+- Consejo: Revisar el realeased de cada versión para encontrar paquetes nuevos o actualizados, y revisar las vignettes para aprender a usar los paquetes de manera efectiva. 
+
+### Tipos de paquetes en Bioconductor
+- **Software packages**: Son paquetes que contienen funciones y herramientas para el análisis de datos biológicos. Estos paquetes pueden ser utilizados por los usuarios para realizar análisis específicos, como análisis de expresión génica, análisis de secuencias, etc. Actualmente cuenta con más de 2000 paquetes de software disponibles.
+- **Annotation packages**: Son paquetes que contienen información de anotación biológica, como genes, proteínas, rutas metabólicas, etc. Estos paquetes son utilizados para enriquecer los análisis biológicos con información adicional.
+- **Experiment  packages**: Son paquetes que contienen conjuntos de datos biológicos que pueden ser utilizados para análisis y pruebas. Estos paquetes son útiles para los usuarios que desean trabajar con datos reales sin tener que buscar y descargar conjuntos de datos por separado.
+
+**biocthis** es un paquete de Bioconductor que proporciona una interfaz fácil de usar para acceder a los paquetes de Bioconductor. Permite a los usuarios buscar, instalar y cargar paquetes de Bioconductor de manera sencilla, lo que facilita el acceso a las herramientas y recursos disponibles en el proyecto.
+
+### Info de los paquetes
+- version: Versión del paquete, que puede indicar la antigüedad y la frecuencia de
+- platform: Linux, Windows, MacOS
+- rank: Ranking dentro de Bioconductor, basado en el número de descargas y la actividad del paquete.
+- support: Nivel de soporte disponible para el paquete, que puede incluir documentación, foros de discusión, etc.
+- in Bioc: Indica si el paquete está incluido en Bioconductor.
+- build: Estado de construcción del paquete, que puede indicar si el paquete se ha construido correctamente o si hay problemas de construcción, en plataformas específicas. (install, build, check)
+- dependcies: Indica si el paquete tiene dependencias de otros paquetes, lo que puede afectar su instalación y uso. Un paquete con muchas dependencias puede ser más difícil de instalar y mantener, ya que puede requerir la instalación de varios paquetes adicionales para funcionar correctamente. Sin embargo, también falta analizar la calidad de las dependencias. 
+- DOI
+- descripción del paquete
+- lista de autores: aut-autor; cre-creator; ctb-contributor; fnd-funder; ths-thanks; trl-trial.
+- publicaciones relacionadas con el paquete
+- Instalación: `BiocManager::install("nombre_del_paquete")`
+- Acceso a documentación
+
+**GitHub Actions** : Bioconductor utiliza GitHub Actions para automatizar el proceso de construcción y prueba de paquetes. Esto permite a los desarrolladores asegurarse de que sus paquetes funcionen correctamente en diferentes plataformas y versiones de R antes de ser incluidos en Bioconductor. Cada que se realiza un commit en el repositorio de un paquete, GitHub Actions ejecuta una serie de pruebas automatizadas para verificar que el paquete se construya correctamente y pase todas las pruebas necesarias. Si alguna prueba falla, el desarrollador recibe una notificación para que pueda corregir el problema antes de que el paquete sea revisado por el equipo de Bioconductor. Eso evita que tengas que esperar a que se actualize Bioconductor para ver si tu paquete funciona correctamente, que suele tardar de 24 a 48h, dependiendo de la carga del servidor, con este enfoque tarda menos. (*Biocithis*)
+
+
+### Revisión de paquetes
+
+- mixOmics: Es un paquete diseñado para integrar datos biológicos de alta dimensión, como en las ómicas donde el número de variables es mucho mayor que el número de muestras. Proporciona herramientas para la selección de variables, la visualización y la interpretación de los resultados, lo que facilita el análisis de datos complejos y la identificación de patrones biológicos relevantes.
+
+- MetaboSignal:
+
+Auron Lun
+
+
