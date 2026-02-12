@@ -1,0 +1,38 @@
+# Postcards
+
+Es una plataforma que permite a los usuarios crear una página web personalizada para compartir sus proyectos, investigaciones y resultados de manera visual y atractiva. Postcards ofrece una variedad de plantillas y herramientas de diseño que facilitan la creación de páginas web sin necesidad de conocimientos avanzados en programación o diseño web. Los usuarios pueden agregar texto, imágenes, gráficos, videos y otros elementos multimedia para presentar su trabajo de manera clara y efectiva. Además, Postcards permite a los usuarios compartir sus páginas web con colegas, colaboradores o el público en general, lo que facilita la difusión de sus proyectos y resultados de investigación. Es una herramienta útil para científicos, investigadores y profesionales que desean comunicar sus hallazgos de manera visual y accesible
+
+- GitHub Pages: Postcards utiliza GitHub Pages para alojar las páginas web creadas por los usuarios. GitHub Pages es un servicio de alojamiento web gratuito proporcionado por GitHub, que permite a los usuarios publicar sitios web directamente desde sus repositorios de GitHub. Esto significa que los usuarios pueden crear y mantener sus páginas web utilizando el control de versiones de GitHub, lo que facilita la colaboración y el seguimiento de cambios en sus proyectos. Además, GitHub Pages ofrece una infraestructura confiable y escalable para alojar las páginas web de Postcards, lo que garantiza que los usuarios puedan compartir sus proyectos de manera efectiva con su audiencia. 
+
+Postcards es un paquete de R que permia crear páginas web de manera sencilla a través de rmarkdown. 
+
+## Creando nuevo proyecto
+
+```{r}
+#Crear directorio para el proyecto
+usethis::create_project("Ashm0nt.guithub.io")
+
+
+#Posicionarse en el directorio del proyecto
+usethis::use_git()
+usethis::use_github()
+
+#Elegir una plantilla para la página web
+postcards::use_postcard("template_name")
+```
+ 
+
+Después ya puedes modificar el contenido de la página web editando los archivos rmarkdown que se encuentran en el directorio del proyecto. Puedes agregar texto, imágenes, gráficos y otros elementos multimedia para personalizar tu página web según tus necesidades. Una vez que hayas realizado los cambios, puedes publicar tu página web utilizando GitHub Pages, lo que permitirá a otros usuarios acceder a tu trabajo de manera visual y atractiva.
+
+- Nombre
+- Foto
+- Descripción de ti
+- Proyectos
+- Experiencia
+- Contacto
+
+Una vez que ya se haya editado la plantilla, se tiene qur formatear el texto Rmarkdown a HTML para que se pueda mostrar en la página web. Esto se puede hacer utilizando la función `rmarkdown::render()` en R, que convierte el archivo Rmarkdown en un archivo HTML que se puede publicar en GitHub Pages.
+
+## Publicar la página web
+
+Una vez hecho eso se suben los archivos al github y se publica la página web utilizando GitHub Pages. Esto se puede hacer a través de la configuración del repositorio en GitHub, donde se puede seleccionar la rama y la carpeta que contienen los archivos HTML generados por Rmarkdown para que se publiquen como una página web.
