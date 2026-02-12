@@ -1,49 +1,82 @@
-## ----'start', message=FALSE-----------------------------------
-## Load recount3 R package
+# Recount3
+Recount3 es un recurso que proporciona acceso a datos de RNA-seq procesados de manera uniforme a través de una amplia variedad de proyectos. Permite a los investigadores explorar y analizar datos de RNA-seq sin tener que preocuparse por las diferencias en los métodos de procesamiento entre los diferentes estudios. Recount3 ofrece una interfaz fácil de usar para acceder a los datos, lo que facilita la realización de análisis comparativos entre diferentes proyectos y la generación de hipótesis basadas en los datos de RNA-seq disponibles. Además, Recount3 proporciona herramientas para la visualización y el análisis de los datos de RNA-seq, lo que permite a los investigadores obtener información valiosa sobre la expresión génica y la regulación de los genes en diferentes condiciones biológicas. Cuenta con 700 mil muestras de RNA-seq uniformente procesados, con datos de humano y ratón. 
+
+- Recount: Es la versión anterior de Recount3, propporciona datos de 20 estudios, aproximadamente 70 mil muestras de RNA-seq uniformente procesados.
+
+## Acceso a los datos de Recount3
+
+Primero cargamos el paquere de **recount3**. Este paquete depende se SummarizedExperiment, por lo que también se carga este paquete.
+
+```{r}
 library("recount3")
+```
 
+Después podemos ver los datos que existen, por ejemplo para humanos:
 
-## ----'quick_example'------------------------------------------
+```{r}
 ## Revisemos todos los proyectos con datos de humano en recount3
 human_projects <- available_projects()
 
-## Encuentra tu proyecto de interés. Aquí usaremos
-## SRP009615 de ejemplo
+## Revisando el objeto
+class(human_projects)
+dim(human_projects)
+
+## Revisando un proyecto específico
 proj_info <- subset(
     human_projects,
     project == "SRP009615" & project_type == "data_sources"
 )
-## Crea un objeto de tipo RangedSummarizedExperiment (RSE)
-## con la información a nivel de genes
+```
+
+Se puede crear un objeto de tipo RangedSummarizedExperiment (RSE) con la información a nivel de genes utilizando la función `create_rse()`, que toma como argumento la información del proyecto que se desea analizar. Puede dar la infromación a nivel de genes, exones, junctions, etc.
+
+```{r}
 rse_gene_SRP009615 <- create_rse(proj_info)
 ## Explora el objeto RSE
 rse_gene_SRP009615
 
 
-## ----"interactive_display", eval = FALSE----------------------
-# ## Explora los proyectos disponibles de forma interactiva
-# proj_info_interactive <- interactiveDisplayBase::display(human_projects)
-# ## Selecciona un solo renglón en la tabla y da click en "send".
-# 
-# ## Aquí verificamos que solo seleccionaste un solo renglón.
-# stopifnot(nrow(proj_info_interactive) == 1)
-# ## Crea el objeto RSE
-# rse_gene_interactive <- create_rse(proj_info_interactive)
+# class: RangedSummarizedExperiment 
+# dim: 63856 12 
+# metadata(8): time_created recount3_version ... annotation recount3_url
+# assays(1): raw_counts
+# rownames(63856): ENSG00000278704.1 ENSG00000277400.1 ... ENSG00000182484.15_PAR_Y ENSG00000227159.8_PAR_Y
+# rowData names(10): source type ... havana_gene tag
+# colnames(12): SRR387777 SRR387778 ... SRR389077 SRR389078
+# colData names(175): rail_id external_id ... recount_pred.curated.cell_line BigWigURL
+```
+
+Se diseño la estructura de recount3 para que sean diferentes tablas, de tal manera que cuando se añade información adicional, como la información de los genes, no se tiene que modificar la tabla de cuentas, lo que facilita el acceso a los datos y evita problemas de compatibilidad.
+
+Las cuentas que se reportan en raw_counts no son las cuentas por lectura, sino las cuentas por nucleotido, por lo que se pueden convertir a cuentas por lectura utilizando la función `compute_read_counts()`, que toma como argumento el objeto RSE y devuelve un nuevo objeto RSE con las cuentas por lectura calculadas.
+
+- metadata: información de las muestras, como el tratamiento, la condición, cuando fue creado, etc.
 
 
-## ----"tranform_counts"----------------------------------------
+```{r}
 ## Convirtamos las cuentas por nucleotido a cuentas por lectura
-## usando compute_read_counts().
-## Para otras transformaciones como RPKM y TPM, revisa transform_counts().
 assay(rse_gene_SRP009615, "counts") <- compute_read_counts(rse_gene_SRP009615)
+rse_gene_SRP009615
+```
 
+Tienen ahora 2 assays por que no eliminas los anteriores, sino que se añaden las nuevas cuentas como una nueva assay, lo que permite mantener la información original y tener acceso a ambas versiones de las cuentas.
 
-## ----"expand_attributes"--------------------------------------
-## Para este estudio en específico, hagamos más fácil de usar la
-## información del experimento
+```{r}
 rse_gene_SRP009615 <- expand_sra_attributes(rse_gene_SRP009615)
 colData(rse_gene_SRP009615)[
     ,
     grepl("^sra_attribute", colnames(colData(rse_gene_SRP009615)))
 ]
+```
+
+
+
+
+
+
+
+
+
+
+
 
