@@ -71,8 +71,12 @@ colData(rse_gene_SRP009615)[
 
 
 
+## Ejericio: Analizar los datos de Recount3 utilizando iSEE
 
-
+```{r}
+library("iSEE")
+iSEE::iSEE(rse_gene_SRP009615) 
+```
 
 
 
