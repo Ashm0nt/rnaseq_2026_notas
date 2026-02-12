@@ -1,3 +1,6 @@
+# Objetos de Bioconductor
+Los objejetos de Bioconductor son estructuras de datos específicas que se utilizan para almacenar y organizar datos biológicos, como datos de expresión génica, datos de secuenciación, etc. Estos objetos proporcionan una forma estandarizada de representar y manipular datos biológicos, lo que facilita el análisis y la interpretación de los resultados de los experimentos biológicos. Algunos ejemplos de objetos de Bioconductor incluyen SummarizedExperiment, GenomicRanges, rtracklayer, iSEE, entre otros. Cada uno de estos objetos tiene su propia estructura y funciones asociadas que permiten a los usuarios trabajar con sus datos biológicos de manera eficiente y efectiva.
+
 ## SummarizedExperiment
 SummarizedExperiment es una clase de datos en Bioconductor que se utiliza para almacenar y organizar datos biológicos, como datos de expresión génica, datos de secuenciación, etc. Esta clase proporciona una estructura de datos que permite almacenar tanto los datos biológicos como la información de anotación asociada, como la información de los genes, las muestras, etc.
 
@@ -83,4 +86,28 @@ boxplot(x ~ y)
 summary(lm(x ~ y))
 
 
+```
+
+
+## iSEE
+iSEE es un paquete de Bioconductor que proporciona una interfaz interactiva para explorar y visualizar datos biológicos almacenados en objetos de tipo SummarizedExperiment. Este paquete permite a los usuarios crear gráficos interactivos, como gráficos de dispersión, gráficos de barras, gráficos de violín, etc., para explorar la relación entre diferentes variables en sus datos biológicos. iSEE facilita la identificación de patrones, tendencias y relaciones en los datos biológicos, lo que puede ser útil para generar hipótesis y comprender mejor los resultados de los experimentos biológicos.
+
+Está construido sobre la base de Shiny, lo que permite a los usuarios interactuar con los gráficos y explorar los datos de manera dinámica. iSEE es especialmente útil para analizar datos de expresión génica, datos de secuenciación, datos de metilación, etc., almacenados en objetos de tipo SummarizedExperiment.
+
+**SingleCEllExperiment** es una clase de datos en Bioconductor que se utiliza para almacenar y organizar datos de células individuales, como datos de expresión génica a nivel de célula única, datos de secuenciación a nivel de célula única, etc. Esta clase proporciona una estructura de datos que permite almacenar tanto los datos biológicos a nivel de célula única como la información de anotación asociada, como la información de las células, las muestras, etc.
+
+- Reduced dimension plot
+- Column data plot
+- Feature assay plot
+- Heatmap plot
+- Row statistics table 
+
+Se pueden conectar paneles uos con otros, por ejemplo, un gráfico de dispersión con un gráfico de barras, para que al seleccionar un punto en el gráfico de dispersión, se actualice automáticamente el gráfico de barras para mostrar la información correspondiente a ese punto seleccionado. Esto permite a los usuarios explorar y analizar sus datos de manera más interactiva y dinámica, facilitando la identificación de patrones y relaciones en los datos biológicos a nivel de célula única.
+
+```{r}
+library("iSEE")
+sce_layer <- spatialLIBD::fetch_data("sce_layer")
+sce_layer
+lobstr::obj_size(sce_layer)
+iSEE::iSEE(sce_layer)
 ```
