@@ -156,3 +156,28 @@ dim(rse_gene_SRP045638)
 round(nrow(rse_gene_SRP045638) / nrow(rse_gene_SRP045638_unfiltered) * 100, 2)
 
 ```
+
+Luego se deben normalizar los datos para poder hacer un análisis estadístico adecuado, pero eso lo veremos en la siguiente sección.
+
+- Problema hipotético: Composition bias.
+
+```{r}
+## ----normalize------------------------------------------------
+library("edgeR") # BiocManager::install("edgeR", update = FALSE)
+dge <- DGEList(
+    counts = assay(rse_gene_SRP045638, "counts"),
+    genes = rowData(rse_gene_SRP045638)
+)
+dge <- calcNormFactors(dge)
+
+
+## ----explore_gene_prop_by_age---------------------------------
+library("ggplot2")
+ggplot(as.data.frame(colData(rse_gene_SRP045638)), aes(y = assigned_gene_prop, x = prenatal)) +
+    geom_boxplot() +
+    theme_bw(base_size = 20) +
+    ylab("Assigned Gene Prop") +
+    xlab("Age Group")
+
+```
+
