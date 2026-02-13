@@ -181,3 +181,34 @@ ggplot(as.data.frame(colData(rse_gene_SRP045638)), aes(y = assigned_gene_prop, x
 
 ```
 
+Modelo estadístico
+
+```{r}
+## ----statiscal_model------------------------------------------
+mod <- model.matrix(~ prenatal + sra_attribute.RIN + sra_attribute.sex + assigned_gene_prop,
+    data = colData(rse_gene_SRP045638)
+)
+colnames(mod)
+
+## ----run_limma------------------------------------------------
+library("limma")
+vGene <- voom(dge, mod, plot = TRUE)
+
+eb_results <- eBayes(lmFit(vGene))
+
+de_results <- topTable(
+    eb_results,
+    coef = 2,
+    number = nrow(rse_gene_SRP045638),
+    sort.by = "none"
+)
+dim(de_results)
+head(de_results)
+
+## Genes diferencialmente expresados entre pre y post natal con FDR < 5%
+table(de_results$adj.P.Val < 0.05)
+
+```
+
+limma es un paquete que hace análisis de expresión diferencial utilizando un modelo lineal generalizado. En lugar de utilizar una distribución de Poisson o una distribución binomial negativa para modelar las cuentas de expresión génica, limma utiliza un modelo lineal generalizado que asume que los datos siguen una distribución normal. Esto se logra mediante la transformación de los datos utilizando la función voom, que convierte las cuentas de expresión génica en log2-counts per million (logCPM) y estima la varianza de cada gen en función de su nivel de expresión. Luego, limma utiliza esta información para ajustar un modelo lineal generalizado y realizar pruebas estadísticas para identificar genes diferencialmente expresados entre grupos. Esta aproximación es especialmente útil cuando se tienen muestras con diferentes niveles de expresión génica, ya que permite modelar la heterogeneidad en la varianza de los datos y mejorar la potencia estadística del análisis de expresión diferencial.
+
