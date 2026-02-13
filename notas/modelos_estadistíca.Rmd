@@ -29,3 +29,30 @@ summary(lm(log(Volume) ~ log(Height) + log(Girth), data = trees))
 
 - *t* es el valor de la estadística t, que se calcula como el cociente entre el coeficiente estimado y su error estándar. Este valor se utiliza para evaluar la significancia estadística del coeficiente, es decir, para determinar si el coeficiente es significativamente diferente de cero. Si tenemos un tamaño de muestra grande se asimila a una normal y se puede usar la distribución normal para calcular el valor p asociado a la estadística t. Si el valor p es menor que un umbral de significancia (por ejemplo, 0.05), se rechaza la hipótesis nula de que el coeficiente es igual a cero, lo que sugiere que hay una relación significativa entre la variable independiente y la variable dependiente.
 
+## ExploreModelMatrix
+
+ExploreModelMatrix es una función que se utiliza para explorar la matriz de diseño de un modelo estadístico. La matriz de diseño es una representación matricial de las variables independientes en un modelo estadístico, donde cada fila representa una observación y cada columna representa una variable independiente. ExploreModelMatrix permite visualizar la estructura de la matriz de diseño, lo que puede ayudar a identificar problemas como la multicolinealidad entre las variables independientes o la presencia de valores faltantes. Esta función es útil para comprender mejor el modelo estadístico que se está utilizando y para asegurarse de que los datos se están analizando de manera adecuada.
+
+```{r}
+## Datos de ejemplo
+(sampleData <- data.frame(
+    genotype = rep(c("A", "B"), each = 4),
+    treatment = rep(c("ctrl", "trt"), 4)
+))
+
+## Generemos las imágenes usando ExploreModelMatrix
+vd <- ExploreModelMatrix::VisualizeDesign(
+    sampleData = sampleData,
+    designFormula = ~ genotype + treatment,
+    textSizeFitted = 4
+)
+
+## Veamos las imágenes
+cowplot::plot_grid(plotlist = vd$plotlist)
+
+app <- ExploreModelMatrix(
+    sampleData = sampleData,
+    designFormula = ~ genotype + treatment
+)
+if (interactive()) shiny::runApp(app)
+```
