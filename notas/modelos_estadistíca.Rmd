@@ -1,0 +1,31 @@
+# Modelos estadísticos
+
+Para entender modelos estadísticos podemos usar palabras, ecuaciones, gráficos, etc. Para entender un modelo estadístico es importante entender los datos que se están analizando, las preguntas que se quieren responder y las suposiciones que se están haciendo sobre los datos.
+
+## Regresión lineal
+
+La regresión lineal es un modelo estadístico que se utiliza para analizar la relación entre una variable dependiente y una o más variables independientes. El modelo asume que la relación entre las variables es lineal, lo que significa que la variable dependiente puede ser expresada como una combinación lineal de las variables independientes.
+
+- β0 Punto en el eje y cuando X es igual a 0, es decir, el valor esperado de Y cuando X es igual a 0.
+- β1 is the average change in our outcome Y for a one unit increase in our explanatory variable  X.
+
+```{r}
+# Ejemplo de regresión lineal
+mat <- with(trees, model.matrix(log(Volume) ~ log(Height) + log(Girth)))
+mat
+
+summary(lm(log(Volume) ~ log(Height) + log(Girth), data = trees))
+
+# Residuals:
+#       Min        1Q    Median        3Q       Max 
+# -0.168561 -0.048488  0.002431  0.063637  0.129223 
+
+# Coefficients:
+#             Estimate Std. Error t value Pr(>|t|)    
+# (Intercept) -6.63162    0.79979  -8.292 5.06e-09 ***
+# log(Height)  1.11712    0.20444   5.464 7.81e-06 ***
+# log(Girth)   1.98265    0.07501  26.432  < 2e-16 ***
+```
+
+- *t* es el valor de la estadística t, que se calcula como el cociente entre el coeficiente estimado y su error estándar. Este valor se utiliza para evaluar la significancia estadística del coeficiente, es decir, para determinar si el coeficiente es significativamente diferente de cero. Si tenemos un tamaño de muestra grande se asimila a una normal y se puede usar la distribución normal para calcular el valor p asociado a la estadística t. Si el valor p es menor que un umbral de significancia (por ejemplo, 0.05), se rechaza la hipótesis nula de que el coeficiente es igual a cero, lo que sugiere que hay una relación significativa entre la variable independiente y la variable dependiente.
+
