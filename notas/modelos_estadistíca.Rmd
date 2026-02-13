@@ -49,10 +49,40 @@ vd <- ExploreModelMatrix::VisualizeDesign(
 
 ## Veamos las imágenes
 cowplot::plot_grid(plotlist = vd$plotlist)
+```
 
+```{r}
+library(ExploreModelMatrix)
 app <- ExploreModelMatrix(
     sampleData = sampleData,
     designFormula = ~ genotype + treatment
 )
 if (interactive()) shiny::runApp(app)
+```
+
+
+### Ejericio
+
+
+```{r}
+library(recount3)
+human_projects <- available_projects()
+
+rse_gene_SRP045638 <- create_rse(
+    subset(
+        human_projects,
+        project == "SRP045638" & project_type == "data_sources"
+    )
+)
+assay(rse_gene_SRP045638, "counts") <- compute_read_counts(rse_gene_SRP045638)
+## ----describe_issue-------------------------------------------
+rse_gene_SRP045638$sra.sample_attributes[1:3]
+
+
+## ----solve_issue----------------------------------------------
+## Extra column
+rse_gene_SRP045638$sra.sample_attributes <- gsub("dev_stage;;Fetal\\|", "", rse_gene_SRP045638$sra.sample_attributes)
+rse_gene_SRP045638$sra.sample_attributes[1:3]
+
+
 ```
