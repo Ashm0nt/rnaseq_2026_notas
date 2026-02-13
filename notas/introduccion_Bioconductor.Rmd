@@ -48,10 +48,8 @@ Bioconductor saca versiones en Abril y en Octubre de cada año, con nuevas herra
 
 ### Revisión de paquetes
 
-- mixOmics: Es un paquete diseñado para integrar datos biológicos de alta dimensión, como en las ómicas donde el número de variables es mucho mayor que el número de muestras. Proporciona herramientas para la selección de variables, la visualización y la interpretación de los resultados, lo que facilita el análisis de datos complejos y la identificación de patrones biológicos relevantes.
+- iModMix es un paquete que implementa una estrategia basada en redes para integrar mediciones multiómicas obtenidas de las mismas muestras, como transcriptómica, proteómica y metabolómica. El método analiza primero cada conjunto de datos de forma independiente, deduciendo redes de correlación parcial a través de modelos gráficos gaussianos con lasso gráfico para priorizar las asociaciones directas entre variables. A continuación, estas redes se interrogan utilizando la superposición topológica y la agrupación jerárquica para definir módulos de características estrechamente conectadas. Cada módulo se resume mediante una característica propia derivada del primer componente principal, lo que permite realizar comparaciones directas con los fenotipos o las condiciones experimentales proporcionadas en los metadatos. Tras este modelado específico por capas, iModMix realiza una integración entre ómicas correlacionando las características propias de los conjuntos de datos y aplicando umbrales definidos por el usuario para generar una red de módulo a módulo que destaca los programas biológicos coordinados. En última instancia, el marco informa de los módulos más fuertemente asociados, las variables que los componen y resúmenes visuales de sus relaciones, lo que proporciona una forma exploratoria, pero con base estadística, de descubrir interacciones moleculares multicapa, incluso cuando las anotaciones funcionales previas son limitadas o inexistentes.
 
-- MetaboSignal:
+- 
 
-Auron Lun
-
-
+- 
