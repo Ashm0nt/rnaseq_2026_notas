@@ -56,7 +56,7 @@ Bioconductor saca versiones en Abril y en Octubre de cada año, con nuevas herra
 
 #### Resumen
 
-|| Paquete | Descripción breve | Link | ¿Para qué usarlo? | Revisado por | Estadísticas |
+| Paquete | Descripción breve | Link | ¿Para qué usarlo? | Revisado por | Estadísticas |
 |:--:|:--:|:--:|:--:|:--:|:--:|
 | iModMix | Integra datos multiómicos mediante redes de correlación parcial, define módulos de variables conectadas y los asocia con fenotipos para descubrir programas biológicos coordinados. | https://bioconductor.org/packages/iModMix | Identificar módulos multi-ómicos asociados a rasgos y explorar interacciones entre capas sin requerir anotaciones previas. | [Ashm0nt](https://github.com/Ashm0nt) | (platforms: all)<br>(rank: 2337 / 2361)<br>(support: 0 / 0)<br>(in Bioc: < 6 months)<br>(build: ok)<br>(updated: before release)<br>(dependencies: 155) |
 | cellmig | Implementa modelos jerárquicos bayesianos para analizar migración celular considerando ruido técnico y estructura anidada entre células, réplicas y condiciones. | https://bioconductor.org/packages/cellmig | Facilita el análisis de la migración celular bajo diferentes condiciones biológicas. | [marinams-omics](https://github.com/marinams-omics) | (platforms: all)<br>(rank: 2200 / 2361)<br>(support: 0 / 0)<br>(in Bioc: 1.5 years)<br>(build: ok)<br>(updated: before release)<br>(dependencies: 150) |
