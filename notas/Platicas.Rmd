@@ -1,0 +1,150 @@
+# Platicas
+
+## B cell activation multi-omic profiling and its relevance for immune-mediated diseases – María Gutierrez-Arcelus
+
+Intersección entre genética humana e inmunología. La variación genética contribuye a la susceptibilidad a enfermedades; la pregunta central es **cómo estas variantes afectan la regulación celular**. Para ello se utilizan estrategias multiómicas que permiten entender mejor los estados celulares y los mecanismos regulatorios.
+
+Los estudios de asociación de genoma completo (GWAS) han identificado numerosas variantes asociadas a enfermedades inmunológicas. Sin embargo, la mayoría tienen **efectos pequeños** y se localizan en **regiones no codificantes**. Si logramos identificar qué genes están siendo afectados, se pueden proponer nuevos blancos terapéuticos.
+
+Existen varios retos importantes:
+
+- No se conoce con certeza cuál es la **variante causal** (debido al desequilibrio de ligamiento y a variantes correlacionadas).
+- No se sabe cuál es el **gen blanco**.
+- No está claro **en qué tipo o estado celular** ocurre el efecto.
+
+La integración de GWAS con perfiles de cromatina permite identificar en qué tejidos y tipos celulares se ubican las regiones regulatorias, así como evaluar la colocalización entre variantes de susceptibilidad y elementos reguladores específicos.
+
+### eQTL studies
+
+Solo alrededor del **25–47%** de las variantes de riesgo colocalizan con señales de expresión génica.  
+Entonces, ¿dónde están los efectos faltantes? Una posibilidad es que ocurran en **estados celulares específicos** o en tipos celulares que han sido poco estudiados.
+
+
+### Linfocitos B
+
+Los linfocitos B cuentan con relativamente pocos datasets comparados con otros tipos celulares, a pesar de su papel crucial en:
+
+- Producción de anticueros  
+- Presentación de antígenos  
+- Memoria inmunológica  
+- Regulación de la respuesta inmune  
+
+*B is for beautiful… and for B cells.*
+
+
+
+### Study design
+
+Se aislaron linfocitos B de donadores sanos y se estimularon bajo distintas condiciones que inducen diversos estados de activación. Se activaron diferentes receptores, se midieron múltiples puntos temporales y se incluyó un **cocktail de estimulación relevante para lupus**.
+
+Se aplicaron múltiples capas ómicas para caracterizar los cambios regulatorios.
+
+
+
+### CITE-seq
+
+Permite medir simultáneamente transcriptoma y marcadores de superficie celular, ayudando a definir con mayor resolución los estados celulares.
+
+
+
+### Low-input RNA-seq
+
+Las muestras estimuladas vía BCR tienden a agruparse en extremos del PCA.
+
+Se evaluó expresión diferencial a través de todas las condiciones y tiempos.
+
+### Ejemplos en loci de riesgo de lupus
+
+- **STAT1**: expresión baja excepto en DN2 (respuesta tipo IFN-γ).
+- **BANK1**: muestra un patrón distinto, con *downregulation* tras estimulación del BCR.
+
+El análisis permite identificar genes cuyo patrón de expresión cambia dependiendo del contexto de estimulación, lo cual ayuda a entender mecanismos regulatorios asociados a susceptibilidad a enfermedad (→ análisis GO).
+
+Los genes asociados a lupus muestran distribuciones particulares entre distintos módulos de expresión.
+
+
+### RNA-seq
+
+Perfil global de cambios transcripcionales dependientes de condición y tiempo.
+
+
+### ATAC-seq
+
+Se identificaron diferencias en accesibilidad de cromatina entre condiciones.  
+Al comparar con resultados de GWAS, las variantes de riesgo están **enriquecidas en regiones de cromatina abierta** en linfocitos B, particularmente en estados específicos de activación.
+
+Un ejemplo de *fine mapping* mostró que una variante de riesgo para lupus se superpone con una región intergénica accesible específica del cocktail DN2, cercana a **TNFSF4**, sugiriendo regulación epigenética del locus.
+
+
+
+### Working hypothesis
+
+Muchas variantes se localizan en regiones que se vuelven accesibles tras la estimulación. Estas podrían desempeñar papeles clave en procesos de diferenciación y regulación **específicos de locus** y dependientes del estado celular.
+
+---
+
+## RNA-seq en el mundo real y casi todo lo que puede salir mal en el intento
+
+En cualquier proyecto de RNA-seq siempre existirán errores humanos, limitaciones tecnológicas, problemas metodológicos, además de la propia complejidad y variabilidad biológica. Nada de lo que medimos es perfecto, por lo que debemos ser conscientes de las fuentes de sesgo e incertidumbre en cada etapa.
+
+### Diseño experimental y generación de datos
+
+- **Tamaño de muestra**: si es pequeño, los resultados deben interpretarse con cautela.
+- **Tamaño de efecto**: cambios pequeños requieren mayor poder estadístico.
+- **Réplicas biológicas**: asegurar independencia entre muestras y evitar pseudorreplicación.
+- **Variables de confusión**: pueden producir asociaciones espurias; deben incorporarse en los modelos estadísticos.
+- **Calidad del RNA** (por ejemplo, RIN): variación entre muestras, degradación o contaminación.
+- **Outliers**: identificarlos y justificar si se excluyen.
+- **Genes marcadores**: útiles como control de calidad biológica.
+- **Procesamiento de muestras**: posibles *batch effects*.
+- **Preparación de librerías**:
+  - Transcritos más largos → más lecturas → necesidad de normalizar por longitud génica.
+  - Sesgos por amplificación → diferencias en tamaño de librería.
+- **Secuenciación**:
+  - Profundidad.
+  - Calidad de lectura.
+  - Errores técnicos.
+- **Alineamiento**:
+  - Idealmente, lecturas que mapeen de forma única.
+  - Anotaciones o genomas de referencia incompletos.
+  - Polimorfismos respecto a la referencia.
+  - Uso de alineadores que consideren *splicing*.
+- **Normalización**: métodos como CPM o TMM buscan hacer comparables las muestras.
+
+### Ruido e incertidumbre
+
+Nunca observamos la “verdadera” expresión génica de la población; solo tenemos una muestra con error.
+
+- **Estimación de coeficientes**: pueden cambiar si la muestra fuera distinta.
+- **Selección de variables**: lo que parece importante podría no serlo en otro conjunto de datos.
+- **Error de estimación**: depende de cómo se especifica el modelo.
+- **Residuales**: reflejan variación no explicada.
+- **Errores estándar**: cuantifican la incertidumbre de las estimaciones.
+- **Variabilidad entre predictores**: diferentes muestras pueden llevar a modelos distintos.
+- En resumen → siempre hay ruido.
+
+### Análisis estadísticos
+
+- Se calculan p-values, pero debido a pruebas múltiples se ajustan (por ejemplo, control de FDR).
+
+### Interpretación de resultados
+
+- No es factible revisar gen por gen cuando hay miles de candidatos.
+- Si pocos genes quedan cerca del umbral de FDR, el corte puede volverse arbitrario.
+- Por ello se suelen analizar **conjuntos funcionales** o rutas mediante herramientas como *Gene Set Enrichment Analysis*.
+
+
+
+## Single nucleus RNA-seq of the nucleus basilis of Meynert
+
+Gen APOE: Papel central en el transporte y metabolismo de lípidos. Se asocia con enfermedades cardiovasuclres, accdidentes cerebrovasculares y enfermedad de Alzheimer. APOE4 es el alelo de riesgo más fuerte para la enfermedad de Alzheimer, mientras que APOE2 se asocia con un menor riesgo. El mecanismo por el cual APOE4 aumenta el riesgo de enfermedad de Alzheimer no se comprende completamente, pero se cree que está relacionado con su impacto en la función neuronal, la inflamación y la acumulación de placas amiloides en el cerebro.
+
+Núcleo basal de Meynert: Es una región del cerebro que se encuentra en la base del cerebro y que está involucrada en la regulación de la atención, la memoria y otras funciones cognitivas. Esta región es particularmente vulnerable a la degeneración en la enfermedad de Alzheimer, lo que sugiere que podría desempeñar un papel importante en la patología de esta enfermedad. Presenta una perdida del aproximadamente el 50% de las neruonas. 
+
+Se definen dos carcateristicas: genotipo y ancestría a nivel de composición celular y expresión genica diferencial.
+
+## scnRNA-seq
+Se aislan nucleos y se hacen las gems para tagera las célula s individuales, se hace la secuenciación y después se hace el análisis bioinformático para identificar los tipos celulares presentes en el núcleo basal de Meynert y para comparar la composición celular entre los diferentes genotipos y ancestrías. 
+
+SingleCellSummarizeExperiment: Es un objeto de Bioconductor que se utiliza para almacenar y organizar datos de expresión génica a nivel de célula única. Este objeto proporciona una estructura de datos que permite almacenar tanto los datos de expresión génica como la información de anotación asociada, como la información de las células, las muestras, etc. El objeto SingleCellSummarizedExperiment es una extensión del objeto SummarizedExperiment y está diseñado específicamente para manejar datos de expresión génica a nivel de célula única, lo que facilita el análisis y la interpretación de los resultados de los experimentos de secuenciación a nivel de célula única.
+
