@@ -212,3 +212,59 @@ table(de_results$adj.P.Val < 0.05)
 
 limma es un paquete que hace análisis de expresión diferencial utilizando un modelo lineal generalizado. En lugar de utilizar una distribución de Poisson o una distribución binomial negativa para modelar las cuentas de expresión génica, limma utiliza un modelo lineal generalizado que asume que los datos siguen una distribución normal. Esto se logra mediante la transformación de los datos utilizando la función voom, que convierte las cuentas de expresión génica en log2-counts per million (logCPM) y estima la varianza de cada gen en función de su nivel de expresión. Luego, limma utiliza esta información para ajustar un modelo lineal generalizado y realizar pruebas estadísticas para identificar genes diferencialmente expresados entre grupos. Esta aproximación es especialmente útil cuando se tienen muestras con diferentes niveles de expresión génica, ya que permite modelar la heterogeneidad en la varianza de los datos y mejorar la potencia estadística del análisis de expresión diferencial.
 
+Ahora en la parte de visualización, lo más común es hacer un gráfico de volcan, que muestra la relación entre el valor p y el log2 fold change de cada gen, lo que permite identificar fácilmente los genes que son significativamente diferencialmente expresados entre grupos. Otro grafico es el MA plot, que muestra la relación entre el log2 fold change y el nivel de expresión de cada gen, lo que permite identificar genes que son diferencialmente expresados entre grupos y que tienen un nivel de expresión alto o bajo. También se pueden hacer gráficos de barras o gráficos de violín para mostrar la distribución de los niveles de expresión de los genes diferencialmente expresados entre grupos. Y por último un heatmap para mostrar la expresión de los genes diferencialmente expresados entre grupos, lo que permite identificar patrones de expresión y agrupamientos de genes y muestras.
+
+```{r}
+# Visualicemos los resultados estadísticos
+plotMA(eb_results, coef = 2)
+
+volcanoplot(eb_results, coef = 2, highlight = 3, names = de_results$gene_name)
+de_results[de_results$gene_name %in% c("ZSCAN2", "VASH2", "KIAA0922"), ]
+
+
+## ----pheatmap-------------------------------------------------
+## Extraer valores de los genes de interés
+exprs_heatmap <- vGene$E[rank(de_results$adj.P.Val) <= 50, ]
+
+## Creemos una tabla con información de las muestras
+## y con nombres de columnas más amigables
+df <- as.data.frame(colData(rse_gene_SRP045638)[, c("prenatal", "sra_attribute.RIN", "sra_attribute.sex")])
+colnames(df) <- c("AgeGroup", "RIN", "Sex")
+
+## Hagamos un heatmap
+library("pheatmap")
+pheatmap(
+    exprs_heatmap,
+    cluster_rows = TRUE,
+    cluster_cols = TRUE,
+    show_rownames = FALSE,
+    show_colnames = FALSE,
+    annotation_col = df
+)
+
+```
+
+También puede ser un MDS plot, que muestra la relación entre las muestras en función de su expresión génica, lo que permite identificar agrupamientos de muestras y patrones de expresión. En este caso, se puede colorear las muestras por el grupo de edad (prenatal vs postnatal) para ver si hay una separación clara entre los grupos.
+
+```{r}
+## ----plot_mds-------------------------------------------------
+## Para colores
+library("RColorBrewer")
+
+## Conviertiendo los grupos de edad a colores
+col.group <- df$AgeGroup
+levels(col.group) <- brewer.pal(nlevels(col.group), "Set1")
+col.group <- as.character(col.group)
+
+## MDS por grupos de edad
+plotMDS(vGene$E, labels = df$AgeGroup, col = col.group)
+
+## Conviertiendo los valores de Sex a colores
+col.sex <- df$Sex
+levels(col.sex) <- brewer.pal(nlevels(col.sex), "Dark2")
+col.sex <- as.character(col.sex)
+
+## MDS por sexo
+plotMDS(vGene$E, labels = df$Sex, col = col.sex)
+
+```
