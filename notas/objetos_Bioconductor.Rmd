@@ -12,6 +12,7 @@ Tenemos que tener al menos tres tipos de tablas ligadas
 - exptData: Información adicional sobre el experimento, como la fecha de realización, el laboratorio, metadatos, etc.
 
 ```{r}
+library("SummarizedExperiment")
 se <- SummarizedExperiment(
   assays,
   colData,
@@ -29,7 +30,7 @@ gr <- GRanges(
     ranges = IRanges(c(1, 100, 200), width = c(100, 50, 75)),
     strand = Rle(c("+", "-", "*")),
     score = c(10, 20, 30),
-    GC = c(0.5, 0.6, 0.7)
+    GC = c(0.5, 0.6, 0.7))
 ```
 
 ## rtracklayer
