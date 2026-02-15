@@ -11,27 +11,8 @@ Tenemos que tener al menos tres tipos de tablas ligadas
 - assays: Datos biológicos, como los valores de expresión génica, los recuentos de secuenciación, etc. (Una o más tablas de datos biológicos, cada una con un nombre específico, como "counts", "log2Counts", etc.)
 - exptData: Información adicional sobre el experimento, como la fecha de realización, el laboratorio, metadatos, etc.
 
-```{r}
-library("SummarizedExperiment")
-se <- SummarizedExperiment(
-  assays,
-  colData,
-  rowRanges,
-  exptData
-)
-```
-
 ## GenomicRanges
 GenomicRanges es una clase de datos en Bioconductor que se utiliza para representar y manipular rangos genómicos, que son intervalos de secuencia en el genoma. Esta clase proporciona una estructura de datos que permite almacenar información sobre la ubicación genómica, la anotación de genes, etc., y proporciona funciones para realizar operaciones comunes en rangos genómicos, como la intersección, la unión, la diferencia, etc.
-
-```{r}
-gr <- GRanges(
-    seqnames = Rle(c("chr1", "chr2", "chr3")),
-    ranges = IRanges(c(1, 100, 200), width = c(100, 50, 75)),
-    strand = Rle(c("+", "-", "*")),
-    score = c(10, 20, 30),
-    GC = c(0.5, 0.6, 0.7))
-```
 
 ## rtracklayer
 rtracklayer es un paquete de Bioconductor que proporciona funciones para importar y exportar datos genómicos en diferentes formatos, como BED, GFF, WIG, etc. Este paquete permite a los usuarios leer y escribir archivos de datos genómicos, lo que facilita la integración de datos genómicos en análisis biológicos y la visualización de datos genómicos en herramientas como IGV (Integrative Genomics Viewer).
