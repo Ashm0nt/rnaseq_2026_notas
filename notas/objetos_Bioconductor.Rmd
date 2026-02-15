@@ -93,3 +93,7 @@ sce_layer
 lobstr::obj_size(sce_layer)
 iSEE::iSEE(sce_layer)
 ```
+
+### Ejericio
+
+Los genes que se parecen más en su patrón de de expresión son MOBP y MBP, y PCP4 se encuentra separado de ambos
